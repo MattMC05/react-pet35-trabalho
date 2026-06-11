@@ -5,12 +5,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
     "@vitejs/plugin-react": "latest",
     "axios": "latest",
-    "vite": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-router": "latest"
-  },
-  "devDependencies": {}
+    "react-router": "latest",
+    "tailwindcss": "^4.3.0",
+    "vite": "latest"
+  }
 }
