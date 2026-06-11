@@ -6,6 +6,8 @@ import api from "../services/api";
 const url = "/avistamentos";
 
 function Avistamentos() {
+  const [modeEdit, setModeEdit] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const { nomeUsuario } = useAuth();
   const [avistamentos, setAvistamentos] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ function Avistamentos() {
     titulo: "",
     local: "",
     descricao: "",
-    data:"",
+    data: "",
     nivelMedo: 1,
   });
 
@@ -24,7 +26,7 @@ function Avistamentos() {
       titulo: "",
       local: "",
       descricao: "",
-      data:"",
+      data: "",
       nivelMedo: 1,
     });
   }
@@ -46,6 +48,18 @@ function Avistamentos() {
     }
   }
 
+  async function deletarAvistamento(id) {
+    try {
+      setMensagem("");
+      await api.delete(`${url}/${id}`);
+      setAvistamentos((listaAtual) => listaAtual.filter((avistamento) => avistamento.id !== id));
+      setMensagem("Avistamento excluído com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir avistamento:", error);
+      setMensagem("Erro ao excluir avistamento.");
+    }
+  };
+
   async function cadastrarAvistamento(event) {
     event.preventDefault();
     setMensagem("");
@@ -56,7 +70,7 @@ function Avistamentos() {
       limparFormulario();
       setModalAberto(false);
       setMensagem("Avistamento cadastrado com sucesso!");
-      
+
     } catch (error) {
       console.error("Erro ao cadastrar avistamento:", error);
       setMensagem("Erro ao cadastrar avistamento.");
@@ -95,7 +109,7 @@ function Avistamentos() {
 
 
       {mensagem && <p className="mensagem">{mensagem}</p>}
-{loading ? (
+      {loading ? (
         <p>Carregando avistamentos...</p>
       ) : (
         <div className="list">
@@ -103,25 +117,30 @@ function Avistamentos() {
             <article className="card" key={avistamento.id}>
               <h3>
                 {avistamento?.nome === "string" ? "Nome não disponível" : avistamento?.nome}
-            </h3>
-            <p>
-              <strong>Titulo:</strong> {avistamento?.titulo}
-            </p>
-            <p>
-              <strong>Local:</strong> {avistamento?.local}
-            </p>
-            <p>
-              <strong>Descrição:</strong> {avistamento?.descricao}
-            </p>
-            <p>
-              <strong>Data:</strong> {avistamento?.data}
-            </p>
-            <p>
-              <strong>Nivel de Medo:</strong> {avistamento?.nivelMedo}
-            </p>
-          </article>
-        ))}
-      </div>)}
+              </h3>
+              <p>
+                <strong>Titulo:</strong> {avistamento?.titulo}
+              </p>
+              <p>
+                <strong>Local:</strong> {avistamento?.local}
+              </p>
+              <p>
+                <strong>Descrição:</strong> {avistamento?.descricao}
+              </p>
+              <p>
+                <strong>Data:</strong> {avistamento?.data}
+              </p>
+              <p>
+                <strong>Nivel de Medo:</strong> {avistamento?.nivelMedo}
+              </p>
+              <div className="card-actions">
+                <button onClick={() => deletarAvistamento(avistamento.id)} className="button-excluir">Excluir</button>
+
+                <button onClick={() => editarAvistamento(avistamento, avistamento.id)} className="button-secondary">Editar</button>
+              </div>
+            </article>
+          ))}
+        </div>)}
     </section>
   );
 }
