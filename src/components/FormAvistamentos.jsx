@@ -1,8 +1,8 @@
-function FormAvistamento({ cadastrarAvistamento, fecharModal, formAvistamento, setFormAvistamento }) {
+function FormAvistamento({ modeEdit, cadastrarAvistamento, fecharModal, formAvistamento, setFormAvistamento }) {
   return (
     <form className="form" onSubmit={cadastrarAvistamento}>
       <div className="modal-header">
-        <h2>Cadastrar avistamento</h2>
+        <h2>{modeEdit ? "Editar" : "Cadastrar"} Cadastrar avistamento</h2>
         <button
           aria-label="Fechar modal"
           className="modal-close"
@@ -58,7 +58,7 @@ function FormAvistamento({ cadastrarAvistamento, fecharModal, formAvistamento, s
       <label>
         Data
         <input
-        
+
           name="data"
           onChange={(event) =>
             setFormAvistamento({
@@ -91,7 +91,7 @@ function FormAvistamento({ cadastrarAvistamento, fecharModal, formAvistamento, s
       </label>
 
       <div className="form-actions">
-        <button type="submit">Cadastrar</button>
+        <button type="submit">{modeEdit ? "Editar" : "Cadastrar"}Cadastrar Avistamento</button>
         <button className="button-secondary" onClick={fecharModal} type="button">
           Cancelar
         </button>
