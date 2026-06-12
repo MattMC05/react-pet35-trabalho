@@ -70,9 +70,9 @@ function Login() {
 
         {mensagem && <p className="mensagem erro">{mensagem}</p>}
 
-        <button disabled={carregando} type="submit">
-          {carregando ? "Entrando..." : "Entrar"}
-        </button>
+        <button className="btn-login" disabled={carregando} type="submit">
+        {carregando ? "Entrando..." : "Entrar"}
+       </button>
 
         <Link className="form-link" to="/cadastro">
           Criar uma conta

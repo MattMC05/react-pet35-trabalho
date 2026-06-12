@@ -137,6 +137,28 @@ form {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(251, 191, 36, 0.2);
+  
+}
+
+.form-link {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+}
+
+.form-link:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+  color: white;
 }
 
 input,select,textarea {
@@ -168,6 +190,18 @@ button {
   color: white;
   background: linear-gradient( 135deg, #fbbf24, #d97706);
   transition: 0.3s;
+}
+
+.btn-login {
+  display: block;
+  margin: 20px auto;
+  width: 220px;
+  padding: 16px;
+  font-size: 1.1rem;
+}
+
+.btn-login:hover {
+  transform: scale(1.03);
 }
 
 button:hover {
@@ -228,4 +262,31 @@ footer {
   margin-top: 40px;
   padding: 20px;
   color: #d6d3d1;
+}
+
+.usuario-logado {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fde68a;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.open-modal-button {
+  display: block;
+  margin: 30px auto 40px auto;
+  min-width: 220px;
+  padding: 16px 24px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.button-excluir,
+.button-secondary {
+  min-width: 90px;
 }
