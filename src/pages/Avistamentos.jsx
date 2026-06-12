@@ -60,6 +60,20 @@ function Avistamentos() {
     }
   };
 
+  function abrirModalEdicao(avistamento) {
+    setMensagem("");
+    setModeEdit(true);
+    setFormAvistamento({
+      id: avistamento.id,
+      titulo: avistamento.titulo ?? "",
+      local: avistamento.local ?? "",
+      descricao: avistamento.descricao ?? "",
+      data: avistamento.data ?? "",
+      nivelMedo: avistamento.nivelMedo ?? 1,
+    });
+    setModalAberto(true);
+  }
+
   async function cadastrarAvistamento(event) {
     event.preventDefault();
     setMensagem("");
@@ -74,6 +88,30 @@ function Avistamentos() {
     } catch (error) {
       console.error("Erro ao cadastrar avistamento:", error);
       setMensagem("Erro ao cadastrar avistamento.");
+    }
+  }
+
+  async function editarAvistamento(event) {
+    event.preventDefault();
+    setMensagem("");
+
+    try {
+      const resposta = await api.put(`${url}/${formAvistamento.id}`, formAvistamento);
+      const avistamentoAtualizado = resposta.data ?? formAvistamento;
+
+      setAvistamentos((listaAtual) =>
+        listaAtual.map((avistamento) =>
+          avistamento.id === formAvistamento.id ? { ...avistamento, ...avistamentoAtualizado } : avistamento
+        )
+      );
+
+      setMensagem("Avistamento editado com sucesso!");
+      limparFormulario();
+      setModeEdit(false);
+      setModalAberto(false);
+    } catch (error) {
+      console.error("Erro ao editar avistamento:", error);
+      setMensagem("Erro ao editar avistamento.");
     }
   }
 
@@ -98,7 +136,8 @@ function Avistamentos() {
         <div className="modal-overlay">
           <div className="modal-content">
             <FormAvistamento
-              cadastrarAvistamento={cadastrarAvistamento}
+              modeEdit={modeEdit}
+              cadastrarAvistamento={modeEdit ? editarAvistamento : cadastrarAvistamento}
               fecharModal={fecharModal}
               formAvistamento={formAvistamento}
               setFormAvistamento={setFormAvistamento}
@@ -136,7 +175,7 @@ function Avistamentos() {
               <div className="card-actions">
                 <button onClick={() => deletarAvistamento(avistamento.id)} className="button-excluir">Excluir</button>
 
-                <button onClick={() => editarAvistamento(avistamento, avistamento.id)} className="button-secondary">Editar</button>
+                <button onClick={() => abrirModalEdicao(avistamento)} className="button-secondary">Editar</button>
               </div>
             </article>
           ))}
@@ -145,4 +184,4 @@ function Avistamentos() {
   );
 }
 
-export default Avistamentos;
+export default Avistamentos;	
