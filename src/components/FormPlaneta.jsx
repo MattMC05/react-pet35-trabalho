@@ -1,7 +1,17 @@
-function FormPlaneta({ cadastrarPlaneta, formPlaneta, setFormPlaneta }) {
+function FormPlaneta({modeEdit, cadastrarPlaneta, fecharModal, formPlaneta, setFormPlaneta }) {
   return (
     <form className="form" onSubmit={cadastrarPlaneta}>
-      <h2>Cadastrar planeta</h2>
+      <div className="modal-header">
+        <h2>{modeEdit ? "Editar" : "Cadastrar"} planeta</h2>
+        <button
+          aria-label="Fechar modal"
+          className="modal-close"
+          onClick={fecharModal}
+          type="button"
+        >
+          X
+        </button>
+      </div>
 
       <label>
         Nome
@@ -78,7 +88,7 @@ function FormPlaneta({ cadastrarPlaneta, formPlaneta, setFormPlaneta }) {
         />
       </label>
 
-      <button type="submit">Cadastrar</button>
+      <button type="submit">{modeEdit ? "Editar" : "Cadastrar"}</button>
     </form>
   );
 }
