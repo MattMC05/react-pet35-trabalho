@@ -177,7 +177,7 @@ button:hover {
 }
 
 
-.alien-list,.lista-cards {
+.list,.cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

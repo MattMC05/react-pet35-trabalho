@@ -32,7 +32,15 @@ function Aliens() {
 
   function fecharModal() {
     setModalAberto(false);
+    setModeEdit(false);
     limparFormulario();
+  }
+
+  function abrirModalCadastro() {
+    setMensagem("");
+    setModeEdit(false);
+    limparFormulario();
+    setModalAberto(true);
   }
 
   async function buscarAliensComAxios() {
@@ -59,39 +67,60 @@ function Aliens() {
     }
   };
 
-  async function editarAlien(alien, id) {
+  function abrirModalEdicao(alien) {
     setMensagem("");
-    setFormAlien(alien);
     setModeEdit(true);
+    setFormAlien({
+      id: alien.id,
+      nome: alien.nome ?? "",
+      especie: alien.especie ?? "",
+      planeta: alien.planeta ?? "",
+      periculosidade: alien.periculosidade ?? 1,
+      descricao: alien.descricao ?? "",
+    });
     setModalAberto(true);
-    try {
-       const resposta = await api.get(`${url}/${id}`);
-    setAliens((listaAtual) => [...listaAtual, resposta.data]);
-    setMensagem('Alien editado com sucesso!')
-
-    } catch (error) {
-      console.log()("Erro ao buscar alien para edição:", error);
-      setMensagem("Erro ao buscar alien para edição.");
-    }
-   
   }
 
 
   async function cadastrarAlien(event) {
-    setModeEdit(false);
     event.preventDefault();
     setMensagem("");
 
     try {
       const resposta = await api.post(url, formAlien);
       setAliens((listaAtual) => [...listaAtual, resposta.data]);
+      setMensagem("Alien cadastrado com sucesso!");
+
       limparFormulario();
       setModalAberto(false);
-      setMensagem("Alien cadastrado com sucesso!");
 
     } catch (error) {
       console.error("Erro ao cadastrar alien:", error);
       setMensagem("Erro ao cadastrar alien.");
+    }
+  }
+
+  async function editarAlien(event) {
+    event.preventDefault();
+    setMensagem("");
+
+    try {
+      const resposta = await api.put(`${url}/${formAlien.id}`, formAlien);
+      const alienAtualizado = resposta.data ?? formAlien;
+
+      setAliens((listaAtual) =>
+        listaAtual.map((alien) =>
+          alien.id === formAlien.id ? { ...alien, ...alienAtualizado } : alien
+        )
+      );
+
+      setMensagem("Alien editado com sucesso!");
+      limparFormulario();
+      setModeEdit(false);
+      setModalAberto(false);
+    } catch (error) {
+      console.error("Erro ao editar alien:", error);
+      setMensagem("Erro ao editar alien.");
     }
   }
 
@@ -108,7 +137,7 @@ function Aliens() {
 
       <button
         className="open-modal-button"
-        onClick={() => setModalAberto(true)}
+        onClick={abrirModalCadastro}
         type="button"
       >
         Cadastrar alien
@@ -119,7 +148,7 @@ function Aliens() {
           <div className="modal-content">
             <FormAlien
               modeEdit={modeEdit}
-              cadastrarAlien={cadastrarAlien}
+              cadastrarAlien={modeEdit ? editarAlien : cadastrarAlien}
               fecharModal={fecharModal}
               formAlien={formAlien}
               setFormAlien={setFormAlien}
@@ -155,7 +184,7 @@ function Aliens() {
                 <button onClick={() => deletarAlien(alien.id)} className="button-excluir">Excluir</button>
 
                 
-                <button onClick={() => editarAlien(alien, alien.id)} className="button-secondary">Editar</button>
+                <button onClick={() => abrirModalEdicao(alien)} className="button-secondary">Editar</button>
               </div>
 
             </article>
