@@ -29,15 +29,13 @@ function App() {
             <Link to="/aliens">Aliens</Link>
             <Link to="/planetas">Planetas</Link>
             <Link to="/avistamentos">Avistamentos</Link>
-            {estaAutenticado ? (<button className="menu-button" type="button" onClick={sair}>Sair</button>) : (
+          </>
+        )}
+        {estaAutenticado ? (<button className="menu-button" type="button" onClick={sair}>Sair</button>) : (
             <>
             <Link to="/login">Login</Link>
             <Link to="/cadastro">Cadastro</Link>
             </>)}
-          </>
-        )}
-        {/* <Link to="/planetas">Planetas</Link> */}
-
 
         {/*
           useNavigate permite navegar por codigo.
