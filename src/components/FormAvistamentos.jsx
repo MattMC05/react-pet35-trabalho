@@ -91,7 +91,7 @@ function FormAvistamento({ modeEdit, cadastrarAvistamento, fecharModal, formAvis
       </label>
 
       <div className="form-actions">
-        <button type="submit">{modeEdit ? "Editar" : "Cadastrar"}Cadastrar Avistamento</button>
+        <button type="submit">{modeEdit ? "Editar" : "Cadastrar"} Avistamento</button>
         <button className="button-secondary" onClick={fecharModal} type="button">
           Cancelar
         </button>

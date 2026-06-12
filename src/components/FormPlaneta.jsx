@@ -88,7 +88,13 @@ function FormPlaneta({modeEdit, cadastrarPlaneta, fecharModal, formPlaneta, setF
         />
       </label>
 
-      <button type="submit">{modeEdit ? "Editar" : "Cadastrar"}</button>
+          
+      <div className="form-actions">
+        <button type="submit">{modeEdit ? "Editar" : "Cadastrar"} Planeta</button>
+        <button className="button-secondary" onClick={fecharModal} type="button">
+            Cancelar
+          </button>
+        </div>
     </form>
   );
 }
