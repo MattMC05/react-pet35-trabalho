@@ -7,6 +7,7 @@ const url = "/planetas";
 
 function Planetas() {
   const { nomeUsuario } = useAuth();
+  const [modeEdit, setModeEdit] = useState(false);
   const [planetas, setPlanetas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mensagem, setMensagem] = useState("");
@@ -31,7 +32,15 @@ function Planetas() {
 
   function fecharModal() {
     setModalAberto(false);
+    setModeEdit(false);
     limparFormulario();
+  }
+
+  function abrirModalCadastro() {
+    setMensagem("");
+    setModeEdit(false);
+    limparFormulario();
+    setModalAberto(true);
   }
 
   async function buscarPlanetas() {
@@ -46,6 +55,32 @@ function Planetas() {
     }
   }
 
+  async function deletarPlaneta(id) {
+    try {
+      setMensagem("");
+      await api.delete(`${url}/${id}`);
+      setPlanetas((listaAtual) => listaAtual.filter((planeta) => planeta.id !== id));
+      setMensagem("Planeta excluído com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir planeta:", error);
+      setMensagem("Erro ao excluir planeta");
+    }
+  }
+
+  function abrirModalEdicao(planeta) {
+    setMensagem("");
+    setModeEdit(true);
+    setFormPlaneta({
+      id: planeta.id,
+      nome: planeta.nome ?? "",
+      galaxia: planeta.galaxia ?? "",
+      clima: planeta.clima ?? "",
+      habitavel: planeta.habitavel ?? false,
+      descricao: planeta.descricao ?? "",
+    });
+    setModalAberto(true);
+  }
+
   async function cadastrarPlaneta(event) {
     event.preventDefault();
     setMensagem("");
@@ -53,12 +88,36 @@ function Planetas() {
     try {
       const resposta = await api.post(url, formPlaneta);
       setPlanetas((listaAtual) => [...listaAtual, resposta.data]);
+      setMensagem("Planeta cadastrado com sucesso!");
       limparFormulario();
       setModalAberto(false);
-      setMensagem("Planeta cadastrado com sucesso!");
     } catch (error) {
       console.error("Erro ao cadastrar planeta:", error);
       setMensagem("Erro ao cadastrar planeta.");
+    }
+  }
+
+  async function editarPlaneta(event) {
+    event.preventDefault();
+    setMensagem("");
+
+    try {
+      const resposta = await api.put(`${url}/${formPlaneta.id}`, formPlaneta);
+      const planetaAtualizado = resposta.data ?? formPlaneta;
+
+      setPlanetas((listaAtual) =>
+        listaAtual.map((planeta) =>
+          planeta.id === formPlaneta.id ? { ...planeta, ...planetaAtualizado } : planeta
+        )
+      );
+
+      setMensagem("Planeta editado com sucesso!");
+      limparFormulario();
+      setModeEdit(false);
+      setModalAberto(false);
+    } catch (error) {
+      console.error("Erro ao editar planeta:", error);
+      setMensagem("Erro ao editar planeta.");
     }
   }
 
@@ -73,7 +132,7 @@ function Planetas() {
 
       <button
         className="open-modal-button"
-        onClick={() => setModalAberto(true)}
+        onClick={abrirModalCadastro}
         type="button"
       >
         Cadastrar planeta
@@ -83,7 +142,8 @@ function Planetas() {
         <div className="modal-overlay">
           <div className="modal-content">
             <FormPlaneta
-              cadastrarPlaneta={cadastrarPlaneta}
+              modeEdit={modeEdit}
+              cadastrarPlaneta={modeEdit ? editarPlaneta : cadastrarPlaneta}
               fecharModal={fecharModal}
               formPlaneta={formPlaneta}
               setFormPlaneta={setFormPlaneta}
@@ -117,6 +177,12 @@ function Planetas() {
               <p>
                 <strong>Descrição:</strong> {planeta?.descricao}
               </p>
+              <div className="card-actions">
+                <button onClick={() => deletarPlaneta(planeta.id)} className="button-excluir">Excluir</button>
+
+                <button onClick={() => abrirModalEdicao(planeta)} className="button-secondary">Editar</button>
+              </div>
+
             </article>
           ))}
         </div>
