@@ -135,7 +135,7 @@ function Planetas() {
         onClick={abrirModalCadastro}
         type="button"
       >
-        Cadastrar planeta
+        Cadastrar Planeta
       </button>
 
       {modalAberto && (

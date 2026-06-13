@@ -140,7 +140,7 @@ function Aliens() {
         onClick={abrirModalCadastro}
         type="button"
       >
-        Cadastrar alien
+        Cadastrar Alien
       </button>
 
       {modalAberto && (

@@ -129,7 +129,7 @@ function Avistamentos() {
         onClick={() => setModalAberto(true)}
         type="button"
       >
-        Cadastrar avistamento
+        Cadastrar Avistamento
       </button>
 
       {modalAberto && (

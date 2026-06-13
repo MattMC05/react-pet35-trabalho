@@ -2,7 +2,7 @@ function FormAvistamento({ modeEdit, cadastrarAvistamento, fecharModal, formAvis
   return (
     <form className="form" onSubmit={cadastrarAvistamento}>
       <div className="modal-header">
-        <h2>{modeEdit ? "Editar" : "Cadastrar"} Cadastrar avistamento</h2>
+        <h2>{modeEdit ? "Editar" : "Cadastrar"} avistamento</h2>
         <button
           aria-label="Fechar modal"
           className="modal-close"
