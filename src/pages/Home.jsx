@@ -26,7 +26,7 @@ function Home() {
       setLoading(true);
 
       const resposta = await api.get("/aliens");
-      const EspeciesAliens = resposta.data.slice(-9).reverse();
+      const EspeciesAliens = resposta.data.slice(-3).reverse();
 
       setAliens(EspeciesAliens);
     } catch(error){
@@ -58,7 +58,7 @@ function Home() {
         </p>
       </div>
 
-        <span className="absolute bottom-40 text-9xl text-yellow-400 animate-bounce"> ↓</span>
+        <span className="absolute bottom-10 text-9xl text-yellow-400 animate-bounce"> ↓</span>
 
       </section>
 
