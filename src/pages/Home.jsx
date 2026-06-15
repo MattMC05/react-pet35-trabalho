@@ -44,41 +44,45 @@ function Home() {
   }, []);
 
   return (
-    <>
-      <section className="relative flex flex-col items-center justify-center min-h-screen">
-        <span className="text-9xl animate-bounce">🛸</span>
-        
-      <div className=" flex flex-col items-center justify-center">
-        <h1 className="text-5xl font-bold text-yellow-400 mt-12">
-          Bem vindo ao Diário de Avistamentos!
-        </h1>
+    <main>
+      <section className="flex min-h-[70vh] flex-col items-center justify-center gap-4">
+        <span className="text-8xl animate-bounce">🛸</span>
 
-        <p className="text-white mt-4">
-          O maior banco de dados de avistamentos extraterrestres.
-        </p>
-      </div>
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-5xl font-bold text-yellow-400">
+            Bem vindo ao Diário de Avistamentos!
+          </h1>
 
-        <span className="absolute bottom-10 text-9xl text-yellow-400 animate-bounce"> ↓</span>
+          <p className="mt-2 text-white">
+            O maior banco de dados de avistamentos extraterrestres.
+          </p>
+        </div>
 
+        <span className="mt-4 text-6xl text-yellow-400 animate-bounce">
+          ↓
+        </span>
       </section>
 
-      <section className="min-h-screen flex flex-col items-center justify-center">
+      <section className="flex flex-col items-center px-6 py-12">
+        <div className="mb-8 flex items-center gap-4">
+          <span className="text-5xl animate-bounce">🔍</span>
 
-          <div className="flex items-center gap-4 mt-10">
-            <span className="text-6xl animate-bounce">🔍</span>
-            <h1 className="text-4xl text-yellow-400">
-              Últimos Avistamentos
-            </h1>
-          </div>
+          <h1 className="text-4xl text-yellow-400">
+            Últimos Avistamentos
+          </h1>
+        </div>
 
         {loading ? (
-          <p className="animate-pulse text-yellow-400 mt-4">
+          <p className="animate-pulse text-yellow-400">
             Carregando últimos avistamentos...
           </p>
         ) : (
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
+          <div className="flex flex-wrap justify-center gap-6">
             {avistamentos.map((avistamento) => (
-              <article className="card w-80 p-4 rounded-lg shadow-lg hover:scale-105 transition-transform" key={avistamento.id}>
+              <article
+                className="card w-80 rounded-lg p-4 shadow-lg transition-transform hover:scale-105"
+                key={avistamento.id}
+              >
                 <h3>{avistamento.titulo}</h3>
 
                 <p>
@@ -100,51 +104,53 @@ function Home() {
             ))}
           </div>
         )}
-      </section >
+      </section>
 
-        <section className="min-h-screen flex flex-col items-center justify-center">
-          <div className="flex items-center gap-4 mt-10">
-            <span className="text-6xl animate-bounce">👽</span>
+      <div className="h-32"></div>
 
-            <h1 className="text-4xl text-yellow-400">
-              Espécies Catalogadas
-            </h1>
+      <section className="flex flex-col items-center px-6 py-12">
+        <div className="mb-8 flex items-center gap-4">
+          <span className="text-5xl animate-bounce">👽</span>
+
+          <h1 className="text-4xl text-yellow-400">
+            Espécies Catalogadas
+          </h1>
+        </div>
+
+        {loading ? (
+          <p className="animate-pulse text-yellow-400">
+            Carregando Espécies...
+          </p>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-6">
+            {aliens.map((alien) => (
+              <article
+                className="card w-80 rounded-lg p-4 shadow-lg transition-transform hover:scale-105"
+                key={alien.id}
+              >
+                <h3>{alien.nome}</h3>
+
+                <p>
+                  <strong>Espécie:</strong> {alien.especie}
+                </p>
+
+                <p>
+                  <strong>Planeta:</strong> {alien.planeta}
+                </p>
+
+                <p>
+                  <strong>Periculosidade:</strong> {alien.periculosidade}
+                </p>
+
+                <p>
+                  <strong>Descrição:</strong> {alien.descricao}
+                </p>
+              </article>
+            ))}
           </div>
-
-          {loading ? (
-            <p className="animate-pulse text-yellow-400 mt-4">
-              Carregando Espécies...
-            </p>
-          ) : (
-            <div className="flex flex-wrap justify-center gap-6 mt-8">
-              {aliens.map((alien) => (
-                <article
-                  className="card w-80 p-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
-                  key={alien.id}
-                >
-                  <h3>{alien.nome}</h3>
-
-                  <p>
-                    <strong>Espécie:</strong> {alien.especie}
-                  </p>
-
-                  <p>
-                    <strong>Planeta:</strong> {alien.planeta}
-                  </p>
-
-                  <p>
-                    <strong>Periculosidade:</strong> {alien.periculosidade}
-                  </p>
-
-                  <p>
-                    <strong>Descrição:</strong> {alien.descricao}
-                  </p>
-                </article>
-              ))}
-            </div>
-          )}
-        </section>
-    </>
+        )}
+      </section>
+    </main>
   );
 }
 
